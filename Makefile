@@ -1,123 +1,28 @@
 ##
-## EPITECH PROJECT, 2017
-## {CHANGE_IT}
+## EPITECH PROJECT, 2018
+## 107transfert_2017
 ## File description:
-## Makefile with build project rule and units tests
+## Makefile
 ##
 
-## Global variables
+CC 		= 	gcc
 
-SUCCESS						= /bin/echo -e "\x1b[1m\x1b[33m\#\#\x1b[32m $1\x1b[0m"
+TESTS 	=	tests/108trigo_basics_tests.c 			\
+			tests/108trigo_cos_tests.c 				\
+			tests/108trigo_utils.c
 
-INFO						= /bin/echo -e "\x1b[1m\x1b[33m\#\#\x1b[34m $1\x1b[0m"
+CFLAGS 	= 	-Wall -Wextra -I./include
 
-HOST						= $(shell printenv HOME)
+LDFLAGS	=	-lcriterion
 
-DEBUG 						= $(if $(filter /home/cyrilcolinet, $(HOST)), -g3, )
-
-COMPILE_LIBRARY 			= $(shell [ -e $(LIBDIR) ] && echo -e "ok" || echo -e "no")
-
-## Compilation variables
-
-NAME 						= {CHANGE_IT}
-
-UNIT 						= units
-
-SRCDIR 						= src/
-
-TESTSDIR 					= tests/
-
-SRCNAMES 					= main.c
-
-SRC 						= $(addprefix $(SRCDIR), $(SRCNAMES))
-
-SRCTESTS					= $(filter-out src/main.c, $(SRC)) 	\
-							  tests/{CHANGE_IT}_tests.c
-
-INC 						= include
-
-BUILDDIR 					= build/
-
-BUILDTESTDIR 				= build_tests/
-
-BUILDSUBDIR 				= $(shell find $(SRCDIR) -mindepth 1 -type d -printf '%p\n' | sed -e 's/^src\///')
-
-BUILDTESTSUBDIR 			= $(shell find $(SRCDIR) -mindepth 1 -type d -printf '%p\n' | sed -e 's/^tests\///')
-
-BUILDOBJS 					= $(addprefix $(BUILDDIR), $(SRCNAMES:.c=.o))
-
-## Check
-BUILDTESTOBJS 				= $(addprefix $(BUILDTESTDIR), $(SRCTESTS:.c=.o)) 
-
-LIBDIR 						= lib/
-
-LIBMY 						= $(LIBDIR)libmy.a
-
-CC 							= gcc
-
-CFLAGS 						= -Wall -Wextra -I$(INC) $(DEBUG)
-
-LFLAGS		 				= $(if $(filter ok, $(COMPILE_LIBRARY)), -L$(LIBDIR) -lmy, )
-
-UNITS_LIBRARY_FLAG 			= $(LFLAGS) -lgcov -lcriterion
-
-OBJ 						= $($SRC:.c=.o)
-
-## Rules
-
-all: 						$(BUILDDIR) $(LIBMY) $(NAME)
-							@$(call SUCCESS, "Project successfully compiled.")
-							@clear
-
-tests_run: 					$(BUILDTESTDIR) $(LIBMY) $(UNIT)
-							@$(call SUCCESS, "Unitary tests successfully compiled.")
-							@clear
-							@echo -e "\n"
-							@$(call SUCCESS, "Execution of criterion tests...")
-							@./$(UNIT)
-							@$(call SUCCESS, "All tests passed !")
+OBJ 	= 	$(TESTS:.c=.o)
 
 clean:
-							rm -rf $(BUILDDIR)
-							rm -rf $(BUILDTESTDIR)
-							find -name '*.gc*' -delete -or -name 'vgcore.*' -delete
-							$(if $(filter ok, $(COMPILE_LIBRARY)), make clean -C $(LIBDIR), @$(call INFO, "No lib needed for this project."))
-							@$(call SUCCESS, "Project fully cleaned.")
+		rm -rf $(OBJ)
 
-fclean: 					clean
-							rm -rf $(NAME)
-							$(if $(filter ok, $(COMPILE_LIBRARY)), make fclean -C $(LIBDIR), @$(call INFO, "No lib needed for this project."))
+fclean: clean
+		rm -rf units
 
-re: 						fclean all
-
-$(BUILDDIR):
-							mkdir -p $(BUILDDIR)
-							$(foreach subdir, $(BUILDSUBDIR), $(shell mkdir -p $(BUILDDIR)$(subdir)))
-
-$(BUILDTESTDIR):
-							mkdir -p {$(BUILDTESTDIR)src,$(BUILDTESTDIR)tests}
-							$(foreach subdir, $(BUILDSUBDIR), $(shell mkdir -p $(BUILDTESTDIR)src/$(subdir)))
-							$(foreach subdir, $(BUILDTESTSUBDIR), $(shell mkdir -p $(BUILDTESTDIR)tests/$(subdir)))
-
-$(BUILDDIR)%.o:				$(SRCDIR)%.c
-							$(CC) $(CFLAGS)   -c -o $@ $<
-
-$(BUILDTESTDIR)src/%.o:		$(SRCDIR)%.c
-							$(CC) $(CFLAGS) --coverage   -c -o $@ $<
-
-$(BUILDTESTDIR)tests/%.o:	$(TESTSDIR)%.c
-							$(CC) $(CFLAGS) --coverage   -c -o $@ $<
-
-$(NAME): 					$(BUILDOBJS)
-							$(CC) $(CFLAGS) $(LFLAGS) -o $(NAME) $(BUILDOBJS) $(LIBDIR)/my/*.o
-							@$(call SUCCESS, "All objects files successfully regrouped in ./$(NAME) binary file.")
-
-$(LIBMY):
-							$(if $(filter ok, $(COMPILE_LIBRARY)), make -C $(LIBDIR), @$(call INFO, "No lib needed for this project."))
-
-$(UNIT): 					$(BUILDTESTOBJS)
-							$(CC) $(CFLAGS) $(UNITS_LIBRARY_FLAG) -o units $(BUILDTESTOBJS) $(LIBDIR)/my/*.o
-							@$(call SUCCESS, "All tests objects files successfully regrouped in ./$(NAME) binary file.")
-
-# Just in case those files exist in the root dir
-.PHONY						: all fclean clean re tests_run
+tests_run: fclean $(OBJ)
+		$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o units
+		./units
