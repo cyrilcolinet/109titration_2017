@@ -9,6 +9,6 @@
 
 from main import *
 
-if (__name__ == "main"):
-	main()
-	exit(0)
+if __name__ == '__main__':
+    main()
+    exit(0)
