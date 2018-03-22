@@ -4,7 +4,7 @@
 ## EPITECH PROJECT, 2018
 ## 109titration_2017
 ## File description:
-## Main
+## [enter description here]
 ##
 
 from main import *
