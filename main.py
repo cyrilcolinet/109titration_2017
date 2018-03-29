@@ -6,6 +6,7 @@
 ##
 
 import sys
+from utils import *
 
 def main():
-	print("alluu")
+	check_arguments()
