@@ -31,6 +31,6 @@ def calc_second_derivative(derive, data):
 	print("Second derivative")
 	for i in range(1, len(derive) - 3):
 		ph = (derive[i + 2] - derive[i])
-		ph /= (data[i + 2][0] - data[i + 1][0])
+		ph /= (data[i + 2][0] - data[i][0])
 		print("volume: %g ml -> %.2f" % (data[i + 1][0], ph))
 	print("\nSecond derivative estimated:")
