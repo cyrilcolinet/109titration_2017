@@ -67,7 +67,10 @@ def bonjour(tab):
             r = i
         v1 += z
         i += 0.1
-    print("recursive = %g" % r)
+
+
+
+
     if k + 3 >= len(derv):
         z = -v2 / 10
     else:

@@ -23,7 +23,7 @@ def calc_pns(data, derive):
 def calc_derivative(data):
 	derive = []
 	derive.append(0)
-	print("Derivative:", file=sys.stderr)
+	print("Derivative:")
 	for i in range(1, len(data) - 1):
 		calc = data[i + 1][1] - data[i - 1][1]
 		calc /= (data[i + 1][0] - data[i - 1][0])
@@ -35,7 +35,7 @@ def calc_derivative(data):
 	return derive
 
 def calc_second_derivative(derive, data):
-	print("Second derivative")
+	print("Second derivative:")
 	for i in range(1, len(derive) - 3):
 		ph = (derive[i + 2] - derive[i])
 		ph /= (data[i + 2][0] - data[i][0])
@@ -65,7 +65,7 @@ def calc_second_derivative_estimation(derive, data):
 	result.append(recursive)
 	while result[0] - 0.05 < data[key][0]:
 		print("volume: %g ml -> %.2f" % (result[0], result[2]))
-		if math.fabs(result[1]) > math.fabs(result[3]) and key + 3 < len(data):
+		if math.fabs(result[1]) > math.fabs(result[2]) and key + 3 < len(data):
 			result[1] = result[2]
 			result[4] = result[0]
 		result[2] += res
@@ -81,7 +81,6 @@ def calc_second_derivative_estimation_last(result, derive, data):
 	two = result[3]
 	recursive = result[4]
 	res = 0
-	print("recursive = %g" % result[4])
 	if key + 3 >= len(derive):
 		res = -two / 10
 	else:
