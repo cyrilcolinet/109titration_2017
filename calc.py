@@ -8,10 +8,7 @@
 import sys
 
 def calc_derivative(data):
-	default = 0.0
 	derive = []
-	tmp = 0
-	sub = 1
 	derive.append(0)
 	print("Derivative:", file=sys.stderr)
 	for i in range(1, len(data) - 1):
@@ -19,12 +16,9 @@ def calc_derivative(data):
 		calc /= (data[i + 1][0] - data[i - 1][0])
 		derive.append(calc)
 		print("volume: %g ml -> %.2f" %(data[i][0], derive[i]))
-		if default < derive[i]:
-			default = derive[i]
-			sub = data[i][0]
-			tmp = i
+	pns = calc_pns(data, derive)
 	derive.append(0)
-	print("\nEquivalent point at %g ml\n" % sub)
+	print("\nEquivalent point at %g ml\n" % pns[0])
 	return derive
 
 def calc_second_derivative(derive, data):
@@ -34,3 +28,15 @@ def calc_second_derivative(derive, data):
 		ph /= (data[i + 2][0] - data[i][0])
 		print("volume: %g ml -> %.2f" % (data[i + 1][0], ph))
 	print("\nSecond derivative estimated:")
+
+def calc_pns(data, derive):
+	default = 0.0
+	result = []
+	result.append(1)
+	result.append(0)
+	for i in range(1, len(data) - 1):
+		if default < derive[i]:
+			default = derive[i]
+			result[0] = data[i][0]
+			result[1] = i
+	return result
