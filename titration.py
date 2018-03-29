@@ -44,7 +44,6 @@ def bonjour(tab):
     derv.append(0)
     print("\n"
           "Equivalent point at %g ml\n" % s)
-    print(derv)
     print("Second derivative:")
     for i in range(1, len(derv) - 3):
         p = (derv[i + 2] - derv[i]) / (tab[i + 2][0] - tab[i][0])
@@ -68,7 +67,7 @@ def bonjour(tab):
             r = i
         v1 += z
         i += 0.1
-
+    print("recursive = %g" % r)
     if k + 3 >= len(derv):
         z = -v2 / 10
     else:

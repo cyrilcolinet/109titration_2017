@@ -11,7 +11,6 @@ from calc import *
 
 def titration(data):
 	derive = calc_derivative(data)
-	print(derive)
 	calc_second_derivative(derive, data)
 	calc_second_derivative_estimation(derive, data)
 

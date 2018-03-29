@@ -49,18 +49,52 @@ def calc_second_derivative_estimation(derive, data):
 	it = data[key - 1][0]
 	ph = 0
 	one = 0
+	result = []
+	result.append(it)
 	if not key - 2 < 0:
 		ph = (derive[key] - derive[key - 2])
 		ph /= (data[key][0] - data[key - 2][0])
 		one = ph
+	result.append(ph)
+	result.append(one)
 	two = (derive[key + 1] - derive[key - 1])
 	two /= (data[key + 1][0] - data[key - 1][0])
+	result.append(two)
 	res = (two - one)
 	res /= (10 * (data[key][0] - data[key - 1][0]))
-	while it - 0.05 < data[key][0]:
-		print("volume: %g ml -> %.2f" % (it, one))
-		if math.fabs(ph) > math.fabs(two) and key + 3 < len(data):
-			ph = one
-			recursive = it
-		one += res
+	result.append(recursive)
+	while result[0] - 0.05 < data[key][0]:
+		print("volume: %g ml -> %.2f" % (result[0], result[2]))
+		if math.fabs(result[1]) > math.fabs(result[3]) and key + 3 < len(data):
+			result[1] = result[2]
+			result[4] = result[0]
+		result[2] += res
+		result[0] += 0.1
+	calc_second_derivative_estimation_last(result, derive, data)
+
+def calc_second_derivative_estimation_last(result, derive, data):
+	pns = calc_pns(data, derive)
+	key = pns[1]
+	it = result[0]
+	ph = result[1]
+	one = result[2]
+	two = result[3]
+	recursive = result[4]
+	res = 0
+	print("recursive = %g" % result[4])
+	if key + 3 >= len(derive):
+		res = -two / 10
+	else:
+		one = (derive[key + 2] - derive[key])
+		one /= (data[key + 2][0] - data[key][0])
+		res = (one - two)
+		res /= (10 * (data[key + 1][0] - data[key][0]))
+	two += res
+	while it - 0.05 < data[key + 1][0]:
+		print("volume: %g ml -> %.2f" % (it, two))
+		two += res
 		it += 0.1
+		if math.fabs(ph) > math.fabs(two) and key + 3 < len(data):
+			ph = two
+			recursive = it
+	print("\nEquivalent point at %g ml" % recursive)
