@@ -17,6 +17,8 @@ LDFLAGS	=	-lcriterion
 
 OBJ 	= 	$(TESTS:.c=.o)
 
+all: tests_run
+
 clean:
 		rm -rf $(OBJ)
 
