@@ -6,12 +6,14 @@
 ##
 
 from os import path
+from numpy import *
 import csv
 import sys
 
 def my_help():
 	print("USAGE:\n\t./109titration <file>\n")
-	print("DESCRIPTION:\n\t<file.csv>\tCSV file for valies list")
+	print("DESCRIPTION:\n\tfile\tCa csv file containing \"vol;ph\" lines")
+	print("\t-h\tDisplay this help file")
 	exit(0)
 
 def check_arguments():
@@ -26,5 +28,13 @@ def check_arguments():
 		exit(84)
 	else:
 		if not path.isfile(sys.argv[1]):
-			print("Non existant file.\nUsage: ./109titration <file>", file=sys.stderr)
+			print("Non existant file.", file=sys.stderr)
 			exit(84)
+
+def load_csv_file():
+	with open(sys.argv[1]) as csv_file:
+		csv_data = transpose(list(csv.reader(csv_file, delimiter=';')))
+		print(csv_data)
+	if len(csv_data) <= 4:
+		print("Not enough data in file", file=sys.stderr)
+		exit(84)
