@@ -44,7 +44,7 @@ def load_csv_file():
 	except (PermissionError, FileNotFoundError) as err:
 		print(err)
 		sys.exit(84)
-	if len(csv_data) <= 4:
+	if len(data) <= 4:
 		print("Not enough data in file")
 		sys.exit(84)
 	return data
