@@ -23,19 +23,19 @@ def check_arguments():
 	length = len(sys.argv)
 	res = []
 	if length < 2:
-		print("Wrong arguments number.\nUsage: ./109titration [-h, --help, -g, --graph] <file>", file=sys.stderr)
+		print("Wrong arguments number.\nUsage: ./109titration [-h, --help, -g, --graph] <file>")
 		sys.exit(84)
 	res.append(sys.argv[1])
 	if length >= 2 and (sys.argv[1] == "-g" or sys.argv[1] == "--graph"):
 		if length != 3:
-			print("Wrong arguments number.\nUsage: ./109titration [-h, --help, -g, --graph] <file>", file=sys.stderr)
+			print("Wrong arguments number.\nUsage: ./109titration [-h, --help, -g, --graph] <file>")
 			sys.exit(84)
 		res[0] = sys.argv[2]
 		res.append("graph")
 	elif length == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
 		my_help()
 	elif not path.isfile(res[0]):
-		print("%s : non existant file." % res[0], file=sys.stderr)
+		print("%s : non existant file." % res[0])
 		sys.exit(84)
 	return res
 
@@ -52,12 +52,12 @@ def load_csv_file(file):
 					if not len(data[i]) == 2:
 						raise IndexError
 			except (ValueError, IndexError):
-				print("Invalid line : %s" % csv_data[i], file=sys.stderr)
+				print("Invalid line : %s" % csv_data[i])
 				sys.exit(84)
 	except (PermissionError, FileNotFoundError) as err:
-		print(err, file=sys.stderr)
+		print(err)
 		sys.exit(84)
 	if len(csv_data) <= 4:
-		print("Not enough data in file", file=sys.stderr)
+		print("Not enough data in file")
 		sys.exit(84)
 	return data
