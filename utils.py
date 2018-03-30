@@ -41,7 +41,7 @@ def load_csv_file():
 			except (ValueError, IndexError):
 				print("%s : invalid file" % sys.argv[1])
 				sys.exit(84)
-	except (PermissionError, FileNotFoundError) as err:
+	except (FileNotFoundError) as err:
 		print(err)
 		sys.exit(84)
 	if len(data) <= 4:
