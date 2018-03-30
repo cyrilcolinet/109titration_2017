@@ -39,7 +39,7 @@ def load_csv_file():
 					if not len(data[i]) == 2:
 						raise IndexError
 			except (ValueError, IndexError):
-				print("Invalid line : %s" % csv_data[i])
+				print("%s : invalid file" % sys.argv[1])
 				sys.exit(84)
 	except (PermissionError, FileNotFoundError) as err:
 		print(err)
