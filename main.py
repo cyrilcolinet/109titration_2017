@@ -8,6 +8,7 @@
 import sys
 from utils import *
 from calc import *
+#from graph import *
 
 def titration(data):
 	derive = calc_derivative(data)
@@ -15,7 +16,8 @@ def titration(data):
 	calc_second_derivative_estimation(derive, data)
 
 def main():
-	data = []
-	check_arguments()
-	data = load_csv_file()
+	res = check_arguments()
+	data = load_csv_file(res[0])
 	titration(data)
+#	if "graph" not in res[1]:
+#		disp_graph()
