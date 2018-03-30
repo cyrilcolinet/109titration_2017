@@ -26,10 +26,10 @@ def check_arguments():
 	elif sys.argv[1] == "-h" or sys.argv[1] == "--help":
 		my_help()
 
-def load_csv_file(file):
+def load_csv_file():
 	data = []
 	try:
-		with open(file) as csv_file:
+		with open(sys.argv[1]) as csv_file:
 			csv_data = list(csv.reader(csv_file, delimiter=';'))
 			try:
 				for i in range(len(csv_data)):

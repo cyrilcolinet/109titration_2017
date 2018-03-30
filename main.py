@@ -16,8 +16,8 @@ def titration(data):
 	calc_second_derivative_estimation(derive, data)
 
 def main():
-	res = check_arguments()
-	data = load_csv_file(res[0])
+	check_arguments()
+	data = load_csv_file()
 	titration(data)
 #	if "graph" not in res[1]:
 #		disp_graph()
