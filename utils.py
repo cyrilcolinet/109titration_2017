@@ -38,10 +38,11 @@ def load_csv_file():
 					data[i][1] = float(csv_data[i][1])
 					if not len(data[i]) == 2:
 						raise IndexError
+					raise IndexError
 			except (ValueError, IndexError):
 				print("%s : invalid file" % sys.argv[1])
 				sys.exit(84)
-	except (FileNotFoundError) as err:
+	except (EnvironmentError) as err:
 		print(err)
 		sys.exit(84)
 	if len(data) <= 4:
