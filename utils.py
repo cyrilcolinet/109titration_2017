@@ -5,39 +5,26 @@
 ## utilfs functions
 ##
 
-from os import path
 from numpy import *
 import csv
 import sys
 
 def my_help():
 	print("USAGE:")
-	print("\t./109titration [-h, --help, -g, --graph] <file>\n")
+	print("\t./109titration [-h, --help] <file>\n")
 	print("DESCRIPTION:")
 	print("\t-h, --help\tDisplay this help page")
-	print("\t-g, --graph\tDisplay plot graph")
 	print("\tfile\t\tA csv file containing \"vol;ph\" lines")
 	sys.exit(0)
 
 def check_arguments():
 	length = len(sys.argv)
-	res = []
-	if length < 2:
-		print("Wrong arguments number.\nUsage: ./109titration [-h, --help, -g, --graph] <file>")
+	if length != 2:
+		print("Wrong arguments number.")
+		print("Usage: ./109titration [-h, --help] <file>")
 		sys.exit(84)
-	res.append(sys.argv[1])
-	if length >= 2 and (sys.argv[1] == "-g" or sys.argv[1] == "--graph"):
-		if length != 3:
-			print("Wrong arguments number.\nUsage: ./109titration [-h, --help, -g, --graph] <file>")
-			sys.exit(84)
-		res[0] = sys.argv[2]
-		res.append("graph")
-	elif length == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help"):
+	elif sys.argv[1] == "-h" or sys.argv[1] == "--help":
 		my_help()
-	elif not path.isfile(res[0]):
-		print("%s : non existant file." % res[0])
-		sys.exit(84)
-	return res
 
 def load_csv_file(file):
 	data = []
