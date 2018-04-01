@@ -5,7 +5,6 @@
 ## utilfs functions
 ##
 
-from numpy import *
 import csv
 import sys
 
