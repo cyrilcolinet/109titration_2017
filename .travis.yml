@@ -13,6 +13,6 @@ python:
 script:
   - ./109titration -h
   - ./109titration values.csv
-  - ./109titration ; if [[ $(echo $?) == 84 ]]; then echo 0; else echo 84; fi
-  - ./109titration unexistant_file ; if [[ $(echo $?) == 84 ]]; then echo 0; else echo 84; fi
-  - ./109titration invalid.csv ; if [[ $(echo $?) == 84 ]]; then echo 0; else echo 84; fi
+  - ./109titration ; if [[ $(echo $?) == 84 ]]; then exit 0; else exit 84; fi
+  - ./109titration unexistant_file ; if [[ $(echo $?) == 84 ]]; then exit 0; else exit 84; fi
+  - ./109titration invalid.csv ; if [[ $(echo $?) == 84 ]]; then exit 0; else exit 84; fi
