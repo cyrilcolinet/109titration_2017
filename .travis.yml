@@ -1,4 +1,13 @@
+# select langiuage
 language: python
+# select group
+group: stable
+# select os
+os: linux
+# notifications settings
+notifications:
+  email: false
+# languages versions
 python:
   - "2.6"
   - "2.7"
